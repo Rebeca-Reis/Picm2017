@@ -1,3 +1,29 @@
+/*
+-Input:
+Qual o material?
+Theta e D(7 valores)
+?b(largura do pico)?
+-Output:
+Tensão Residual e sua característica compressiva ou trativa
+Gráfico Deformação relativa x Sen^2(fi)
+
+Banco de Dados.:.
+-Colunas:
+Nome(Código do material)
+Distância Padrão entre planos
+Módulo de Young
+Razão de Poisson
+
+Procedimento:
+Plotaremos um Gráfico Deformação relativa x Sen^2(fi) e pegaremos seu coeficiente angular para calcularmos a Tensão Residual
+
+
+
+*/
+
+
+
+
 #include <bits/stdc++.h>
 #include <stdlib.h>
 #include <math.h>
@@ -7,9 +33,31 @@
 
 using namespace std;
 
-float theta,d,d0,y,v,tensao,deformacao_relativa;
+float [7]theta/*Entrado 7 vezes para gerar 7 medições para o plot do gráfico principal de saída*/,[7]d/*Distânica medida*/,[7]d0/*Distância padrão presente no banco de dados*/;
+float y/*Módulo de Young*/,v/*Razão de Poisson*/,tensao/*Calculada pela fórmula advinda do gráfico já regredido linearmente de Deformação relativa por sin^2(fi)*/;
+float deformacao_relativa/*(d-d0)/d*/;
 char[100] material;
  
  int main(){
+ 	int a=3;
+ 	FILE *p;//Ponteiro Bolado para mexer no Banco de Dados
+	p=fopen("registromateriais.txt","a");
+	if(!p) printf("Erro ao abrir o arquivo!!!");
+ 	printf("Seja bem vindo ao nosso Software de Cálculo de Tensão Residual :-) \n");
+ 	while(a!=2){
+ 		printf("Você deseja realizar uma consulta:\n");//Opção incial do programa
+ 		printf("Digite 1 Para SIM;\nDigite 2 para FECHAR o programa;\n\n");
+ 		scanf("%d",&a);
+ 		printf("Opção %d escolhida\n", a);
+ 		if(a==2){
+ 			printf("Obrigado por Utilizar o programa\nVolte Sempre que Precisar\n")
+ 			exit();
+ 		}//Sai do programa
+ 		printf("Insira o código do material a ser analisado:\nCódigo:\t");
+ 		gets();//ESCREVER A PARTE DO CÓDIGO QUE RECEBE O MATERIAL E BUSCA O PANDO DE DADOS(Ñ LEMBRO COMO FAZ ISSO)
+ 	}
  	
+ 	fclose(p);
+ 	return 0;
  }
+
