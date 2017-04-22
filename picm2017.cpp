@@ -25,18 +25,18 @@ Plotaremos um Gráfico Deformação relativa x Sen^2(fi) e pegaremos seu coefici
 
 
 #include <bits/stdc++.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
+#include <cstdlib>
+#include <cmath>
+#include <cstring>
 //#include <koolplot.h>
 //#include <graphics.h>
 
 using namespace std;
 
-float [7]theta/*Entrado 7 vezes para gerar 7 medições para o plot do gráfico principal de saída*/,[7]d/*Distânica medida*/,[7]d0/*Distância padrão presente no banco de dados*/;
+float fi[9]/*Entrado 9 vees para gerar 9 medições para o plot do gráfico principal de saída*/,theta,d[9]/*Distânica medida*/,d0[9]/*Distância padrão presente no banco de dados*/;
 float y/*Módulo de Young*/,v/*Razão de Poisson*/,tensao/*Calculada pela fórmula advinda do gráfico já regredido linearmente de Deformação relativa por sin^2(fi)*/;
 float deformacao_relativa/*(d-d0)/d*/;
-char[100] material;
+string material;
  
  int main(){
  	int a=3;
