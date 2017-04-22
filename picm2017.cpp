@@ -20,10 +20,6 @@ Plotaremos um Gráfico Deformação relativa x Sen^2(fi) e pegaremos seu coefici
 
 
 */
-
-
-
-
 #include <bits/stdc++.h>
 #include <cstdlib>
 #include <cmath>
