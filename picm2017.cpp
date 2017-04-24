@@ -24,14 +24,13 @@ Plotaremos um Gráfico Deformação relativa x Sen^2(fi) e pegaremos seu coefici
 #include <cstdlib>
 #include <cmath>
 #include <cstring>
-//#include <koolplot.h>
-//#include <graphics.h>
+#include <graphics.h>
 
 using namespace std;
 
-float fi[9]/*Entrado 9 vees para gerar 9 medições para o plot do gráfico principal de saída*/,theta,d[9]/*Distânica medida*/,d0[9]/*Distância padrão presente no banco de dados*/;
+float fi[3]/*Entrado 9 vees para gerar 9 medições para o plot do gráfico principal de saída*/,theta, psi[9],d[9]/*Distânica medida*/,d0[9]/*Distância padrão presente no banco de dados*/;
 float y/*Módulo de Young*/,v/*Razão de Poisson*/,tensao/*Calculada pela fórmula advinda do gráfico já regredido linearmente de Deformação relativa por sin^2(fi)*/;
-float deformacao_relativa/*(d-d0)/d*/;
+float deformacao_relativa[9]/*(d-d0)/d0*/;
 string material;
  
  int main(){
@@ -41,7 +40,7 @@ string material;
 	if(!p) printf("Erro ao abrir o arquivo!!!");
  	printf("Seja bem vindo ao nosso Software de Cálculo de Tensão Residual :-) \n");
  	while(a!=2){
- 		printf("Você deseja realizar uma consulta:\n");//Opção incial do programa
+ 		printf("Você deseja realizar uma consulta?\n");//Opção incial do programa
  		printf("Digite 1 Para SIM;\nDigite 2 para FECHAR o programa;\n\n");
  		scanf("%d",&a);
  		printf("Opção %d escolhida\n", a);
@@ -51,18 +50,18 @@ string material;
  		}//Sai do programa
  		printf("Insira o código do material a ser analisado:\nCódigo:\t");
  		gets(material);
-	 		p=fopen("registromateriais.txt","a");
-				if(!p) printf("Erro ao abrir o arquivo!!!");
+	 	p=fopen("registromateriais.txt","a");
+		if(!p) printf("Erro ao abrir o arquivo!!!");
 //Estrutura para procurar pelo nome do material no banco de dados:
-				while(!feof(p)){
-					fscanf(p,"%s\t%f\t%f\t%f\n",materialteste,&d0,&y,&v);		
-					i = strcmp(material,materialteste);//Se retornar 0 as strings são iguais
-					if (i==0) break;//Qnd forem iguais teremos nossos valores armazenados
-	 					}									
-	 		fclose(p);
+		while(!feof(p)){
+			fscanf(p,"%s\t%f\t%f\t%f\n",materialteste,&d0,&y,&v);		
+			i = strcmp(material,materialteste);//Se retornar 0 as strings são iguais
+			if (i==0){ break;}//Qnd forem iguais teremos nossos valores armazenados
+	 	}									
+	 	fclose(p);
 //Dados acessados do banco de dados, vamos agora aos cálculos
- 		   }
+ 	}
   	return 0;
-  }
+}
 
 
