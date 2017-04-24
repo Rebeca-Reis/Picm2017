@@ -1,2 +1,2 @@
 # Picm2017
-Trabalho sugado de PICM bolado de Raio X.
+Trabalho de PICM sobre cálculo de tensão residual por difração de raios x.
