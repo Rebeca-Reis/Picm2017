@@ -50,10 +50,19 @@ string material;
  			exit();
  		}//Sai do programa
  		printf("Insira o código do material a ser analisado:\nCódigo:\t");
- 		gets();//ESCREVER A PARTE DO CÓDIGO QUE RECEBE O MATERIAL E BUSCA O PANDO DE DADOS(Ñ LEMBRO COMO FAZ ISSO)
- 	}
- 	
- 	fclose(p);
- 	return 0;
- }
+ 		gets(material);
+	 		p=fopen("registromateriais.txt","a");
+				if(!p) printf("Erro ao abrir o arquivo!!!");
+//Estrutura para procurar pelo nome do material no banco de dados:
+				while(!feof(p)){
+					fscanf(p,"%s\t%f\t%f\t%f\n",materialteste,&d0,&y,&v);		
+					i = strcmp(material,materialteste);//Se retornar 0 as strings são iguais
+					if (i==0) break;//Qnd forem iguais teremos nossos valores armazenados
+	 					}									
+	 		fclose(p);
+//Dados acessados do banco de dados, vamos agora aos cálculos
+ 		   }
+  	return 0;
+  }
+
 
