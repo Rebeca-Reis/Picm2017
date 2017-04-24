@@ -28,26 +28,51 @@ Plotaremos um Gráfico Deformação relativa x Sen^2(fi) e pegaremos seu coefici
 
 using namespace std;
 
+void adicionarmaterial(){
+	char materialnovo[100];
+	float distancia_padrao, modulodeyoung, razaodepoisson;
+	FILE *p;
+	p=fopen("registromateriais.txt","w");
+	if(!p) printf("Erro ao abrir o arquivo!!!");
+	printf("Opção adicionar novo material ao Banco de Dados selecionada:\n");
+	printf("Insira o nome do material a ser inserido:\n");
+	gets(materialnovo);
+	printf("Distância Padrão para esse material:\n");
+	scanf("%f",&distancia_padrao);
+	printf("Módulo de Young para esse material:\n");
+	scanf("%f",&modulodeyoung);
+	printf("Razão de Poisson para esse material:\n");
+	scanf("%f",&razaodepoisson);
+	printf("\nCadastro Realizado com sucesso\nReinicie o programa para validar o novo material\n");
+	fprintf(p,"%s\t%f\t%f\t%f\n",materialnovo,distancia_padrao,modulodeyoung,razaodepoisson);//*
+	fclose(p);
+	return 0;
+	}
+
 float fi[3]/*Entrado 9 vees para gerar 9 medições para o plot do gráfico principal de saída*/,theta, psi[9],d[9]/*Distânica medida*/,d0[9]/*Distância padrão presente no banco de dados*/;
 float y/*Módulo de Young*/,v/*Razão de Poisson*/,tensao/*Calculada pela fórmula advinda do gráfico já regredido linearmente de Deformação relativa por sin^2(fi)*/;
 float deformacao_relativa[9]/*(d-d0)/d0*/;
 string material;
- 
+
  int main(){
- 	int a=3;
+ 	int a=734;
  	FILE *p;//Ponteiro Bolado para mexer no Banco de Dados
 	p=fopen("registromateriais.txt","a");
 	if(!p) printf("Erro ao abrir o arquivo!!!");
  	printf("Seja bem vindo ao nosso Software de Cálculo de Tensão Residual :-) \n");
  	while(a!=2){
  		printf("Você deseja realizar uma consulta?\n");//Opção incial do programa
- 		printf("Digite 1 Para SIM;\nDigite 2 para FECHAR o programa;\n\n");
+ 		printf("Digite 1 Para SIM;\nDigite 2 para FECHAR o programa;\nDigite 3 para adicionar um novo item no Banco de Dados:\n\n");
  		scanf("%d",&a);
  		printf("Opção %d escolhida\n", a);
  		if(a==2){
  			printf("Obrigado por Utilizar o programa\nVolte Sempre que Precisar\n")
  			exit();
  		}//Sai do programa
+		if(a==3){
+			adicionarmaterial();
+			exit();
+		}
  		printf("Insira o código do material a ser analisado:\nCódigo:\t");
  		gets(material);
 	 	p=fopen("registromateriais.txt","a");
