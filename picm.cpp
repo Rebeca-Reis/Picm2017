@@ -2,6 +2,7 @@
 #include "Material.hpp"
 #include <cmath>
 #include <cstdlib>
+#include <clocale>
 using namespace std;
 #define pi 3.141592
 
@@ -45,7 +46,7 @@ void criarMaterial(string n){
 void alteraMaterial(string n){
 	double d;
 	string virgula;
-	cout << "O material já consta no banco de dados.\nInforme o valor da distancia padrão d0: ";
+	cout << "O material já consta no banco de dados, mas ainda falta uma informação a respeito dele.\nInforme o valor da distancia padrão d0: ";
 	cin >> virgula;
 	replace(virgula.begin(),virgula.end(),',','.'); //converte o numero com virgula para ponto
 	d = atof(virgula.c_str());  //passa de string para double
@@ -113,7 +114,7 @@ void realizarCalculos(string nome){
 	} 
 	//usuário já inseriu todas as informações requeridas 
 	//vamos encontrar o índice(k) do material na lista do banco de dados
-	for (int i=0;i<materiais.size();i++) if (nome == materiais[i].getNome()) k=i;
+	for (int i=0;i<materiais.size();i++) if (nome == materiais[i].getNome()) k=i; //k é o índice desse material no vector materiais
 	//preenchimento da matriz das deformações
 	for(int i=0;i<3;i++){
 		for(int j=0;i<9;i++){
@@ -150,10 +151,13 @@ void menu(){
 		case 1:{
 		 	cout << "Informe o nome do material: ";
 		 	cin >> nome;
+		 	transform(nome.begin(), nome.end(), nome.begin(), ::tolower); //caso o usuário tenha digitado em maiúsculas, essa função converte pra minúsculas
 		 	if(buscaMaterial(nome) and verifica_d0(nome)) alteraMaterial(nome);
 		 	if(!buscaMaterial(nome)){
-		 		cout << "O material ainda não existe!!! Ou vc pode ter digitado errado!! Digite novamente o nome: \n";
+		 		cout << "O material ainda não consta no banco de dados! Ou vc pode ter digitado errado! Digite novamente o nome: \n";
+		 		nome.erase();
 		 		cin >> nome;
+		 		transform(nome.begin(), nome.end(), nome.begin(), ::tolower); //converte para minúsculas
 		 		if(buscaMaterial(nome) and verifica_d0(nome)) alteraMaterial(nome);
 		 		if(!buscaMaterial(nome)){ 
 		 			cout << "O material não consta no banco de dados." << endl;
@@ -168,7 +172,16 @@ void menu(){
 		case 2:{
 		 	cout << "Informe o nome do material: ";
 			cin >> nome;
+			transform(nome.begin(), nome.end(), nome.begin(), ::tolower);
 			criarMaterial(nome);
+			menu();
+			break;
+		}
+		case 3:{
+			break;
+		}
+		default:{
+			cout << "Essa não é uma opção válida! Por favor, tente novamente. ";
 			menu();
 			break;
 		}
@@ -177,11 +190,12 @@ void menu(){
 
 int main(){
 
+	setlocale(LC_ALL, "Portuguese"); //para que o programa reconheça caracteres especiais do português
 	Material mat;
 	string s;
 	double n1,n2,n3;
 	cout << "Seja bem vindo ao nosso Software de Cálculo de Tensão Residual :-)\n";
-	// PRIMEIRA COISA DO MAIN , guarda as informações do banco de dados inicial no vector, evitando a necessidade de ficar entrando em contato com o banco de dados a todo momento deixando o programa mais rápido
+	// PRIMEIRA COISA DO MAIN, guarda as informações do banco de dados inicial no vector, evitando a necessidade de ficar entrando em contato com o banco de dados a todo momento deixando o programa mais rápido
 	fstream file("Registro.txt");
 	if(file.is_open()){
 		while(file >> s >> n1 >> n2 >> n3){
@@ -191,11 +205,9 @@ int main(){
 	}
 	file.close();
 
-
-
 	menu();
 
-	// ULTIMA COISA DO MAIN   , traz as informações do vector que foi modificado de volta para o arquivo do banco de dados
+	// ULTIMA COISA DO MAIN, traz as informações do vector que foi modificado de volta para o arquivo do banco de dados
 	fstream novo("Registro.txt");
 	if(novo.is_open()){
 		for(int i=0;i<materiais.size();i++) novo << materiais[i].getNome() << " " << materiais[i].getYoung() << " " << materiais[i].getPoisson() << " " << materiais[i].getD0() << endl;
