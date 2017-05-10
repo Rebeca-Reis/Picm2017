@@ -42,7 +42,7 @@ void criarMaterial(string n){
 	Material mat = Material(n,y,p,d);
 	materiais.push_back(mat);
 	cout << "Material Cadastrado com sucesso!\nPor favor reinicie o programa para validar as mudanças\n";
-	exit();//Vai sair do programa para validar o cadastro realmente
+	exit(0);//Vai sair do programa para validar o cadastro realmente
 }
 
 void alteraMaterial(string n){
@@ -55,6 +55,7 @@ void alteraMaterial(string n){
 	virgula.erase();
 	for(int i=0; i<materiais.size();i++) if (materiais[i].getNome() == n and materiais[i].getD0() == 0) materiais[i].setD0(d);
 	cout << "\nMaterial Alterado com sucesso.\nPor favor reinicie o programa para validar as mudanças!\n";
+	exit(0);
 }
 
 bool verifica_d0(string nome){
