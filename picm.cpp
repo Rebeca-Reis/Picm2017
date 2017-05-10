@@ -181,7 +181,7 @@ int main(){
 	string s;
 	double n1,n2,n3;
 	cout << "Seja bem vindo ao nosso Software de Cálculo de Tensão Residual :-)\n";
-	// PRIMEIRA COISA DO MAIN
+	// PRIMEIRA COISA DO MAIN , guarda as informações do banco de dados inicial no vector, evitando a necessidade de ficar entrando em contato com o banco de dados a todo momento deixando o programa mais rápido
 	fstream file("Registro.txt");
 	if(file.is_open()){
 		while(file >> s >> n1 >> n2 >> n3){
@@ -195,7 +195,7 @@ int main(){
 
 	menu();
 
-	// ULTIMA COISA DO MAIN
+	// ULTIMA COISA DO MAIN   , traz as informações do vector que foi modificado de volta para o arquivo do banco de dados
 	fstream novo("Registro.txt");
 	if(novo.is_open()){
 		for(int i=0;i<materiais.size();i++) novo << materiais[i].getNome() << " " << materiais[i].getYoung() << " " << materiais[i].getPoisson() << " " << materiais[i].getD0() << endl;
