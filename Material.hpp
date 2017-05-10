@@ -4,34 +4,34 @@ using namespace std;
 class Material{
 
 	string nome;
-	float Young;
-	float poisson;
-	float d0;
+	double Young;
+	double poisson;
+	double d0;
 
 public:
 
 	// Construtores
-	Material(string n, int y, int p, int d):nome(n),Young(y),poisson(p),d0(d){}
+	Material(string n, double y, double p, double d):nome(n),Young(y),poisson(p),d0(d){}
 	Material(){};
 
 	// Getters e setters
 	void setNome(string n);
-	void setD0(float d);
+	void setD0(double d);
 	string getNome();
-	float getYoung();
-	float getPoisson();
-	float getD0();
+	double getYoung();
+	double getPoisson();
+	double getD0();
 };
 
-void Material::setD0(float d){
+void Material::setD0(double d){
 	d0 = d;
 }
 
-float Material::getD0(){
+double Material::getD0(){
 	return d0;
 }
 
-float Material::getYoung(){
+double Material::getYoung(){
 	return Young;
 }
 
@@ -43,7 +43,7 @@ string Material::getNome(){
 	return nome;
 }
 
-float Material::getPoisson(){
+double Material::getPoisson(){
 	return poisson;
 }
 
