@@ -1,0 +1,4 @@
+aço_inox_304l_austenítico 193.05 0.3 1.26917
+aço_inox_austenítico_10%_tração 193.05 0.3 1.26903
+aço_inox_austenítico_25%_tração 193.05 0.3 1.26907
+
