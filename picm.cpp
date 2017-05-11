@@ -41,8 +41,6 @@ void criarMaterial(string n){
 	virgula.erase();
 	Material mat = Material(n,y,p,d);
 	materiais.push_back(mat);
-	cout << "Material Cadastrado com sucesso!\nPor favor reinicie o programa para validar as mudanças\n";
-	exit(0);//Vai sair do programa para validar o cadastro realmente
 }
 
 void alteraMaterial(string n){
@@ -54,8 +52,6 @@ void alteraMaterial(string n){
 	d = atof(virgula.c_str());  //passa de string para double
 	virgula.erase();
 	for(int i=0; i<materiais.size();i++) if (materiais[i].getNome() == n and materiais[i].getD0() == 0) materiais[i].setD0(d);
-	cout << "\nMaterial Alterado com sucesso.\nPor favor reinicie o programa para validar as mudanças!\n";
-	exit(0);
 }
 
 bool verifica_d0(string nome){
@@ -130,7 +126,9 @@ void realizarCalculos(string nome){
 	double y_mat = materiais[k].getYoung(); //unidade: GPa
 	double p_mat = materiais[k].getPoisson();
 	for(int i=0;i<3;i++) sigma_fi[i]=m[i]*(y_mat*1000)/(1+p_mat); //unidade: MPa
-	for(int i=0;i<3;i++) printf("sigma_fi: %f MPa\n",sigma_fi[i]);	
+	printf("sigma_fi: %lf MPa, fi= 0°\n",sigma_fi[0]);
+	printf("sigma_fi: %lf MPa, fi= 45°\n",sigma_fi[1]);		
+	printf("sigma_fi: %lf MPa, fi= 90°\n",sigma_fi[2]);	
 	for(int i=0;i<3;i++){ //calculo de sigma11 e sigma22 : unidade MPa
 		if(i==1) continue; //para fi=45º o denominador se anula, por isso nao calcularemos sigma11 e sigma22 para este fi
 		sigmas[i][0]=sigma_fi[i] + (1000*y_mat*deformacao[i][4]*sin(fi[i])*sin(fi[i]))/p_mat;
@@ -138,11 +136,11 @@ void realizarCalculos(string nome){
 		sigmas[i][1]=-(sigma_fi[i] + (1000*y_mat*deformacao[i][4]*cos(fi[i])*cos(fi[i]))/p_mat);
 		sigmas[i][1] /= (cos(fi[i])*cos(fi[i]) - sin(fi[i])*sin(fi[i]));
 	}	
-	printf("Sigmas 11: %lf\n\t%lf\n\t%lf\nsigmas22: %lf\n\t%lf\n\t%lf\n",sigmas[0][0],sigmas[1][0],sigmas[2][0],sigmas[0][1],sigmas[1][1],sigmas[2][1]);
+	printf("Sigmas 11: %lf MPa\n\t%lf MPa\n\t%lf MPa\nsigmas22: %lf MPa\n\t%lf MPa\n\t%lf MPa\n",sigmas[0][0],sigmas[1][0],sigmas[2][0],sigmas[0][1],sigmas[1][1],sigmas[2][1]);
 	double media_11, media_22;
 	media_11=(sigmas[0][0] + sigmas[2][0])/2; //consertar as médias, talvez não faça sentido pra teoria
 	media_22=(sigmas[0][1] + sigmas[2][1])/2;
-	cout << "Fazendo as médias, obtemos:\nsigma11= " << media_11 << "\nsigma22= " << media_22 << endl;
+	cout << "Fazendo as médias, obtemos:\nsigma11= " << media_11 << " MPa" << "\nsigma22= " << media_22 << " MPa" << endl;
 }
 
 void menu(){
@@ -164,7 +162,7 @@ void menu(){
 		 		transform(nome.begin(), nome.end(), nome.begin(), ::tolower); //converte para minúsculas
 		 		if(buscaMaterial(nome) and verifica_d0(nome)) alteraMaterial(nome);
 		 		if(!buscaMaterial(nome)){ 
-		 			cout << "O material não consta no banco de dados." << endl;
+		 			cout << "O material não consta no banco de dados. Abra o programa novamente caso queira tentar novamente" << endl;
 		 			return ;
 		 		}
 		 	}
