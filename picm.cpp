@@ -117,11 +117,12 @@ void realizarCalculos(string nome){
 	for (int i=0;i<materiais.size();i++) if (nome == materiais[i].getNome()) k=i; //k é o índice desse material no vector materiais
 	//preenchimento da matriz das deformações
 	for(int i=0;i<3;i++){
-		for(int j=0;i<9;i++){
+		for(int j=0;j<9;j++){
 			deformacao[i][j]=(dist[i][j]-materiais[k].getD0())/materiais[k].getD0();
 		}
 	}
 	for(int i=0;i<3;i++) m[i]=lms(sen2psi,deformacao,i);
+	cout << "Regressão linear:" << endl;
 	printf("m1: %lf\nm2: %lf\nm3: %lf\n",m[0],m[1],m[2]);
 	double y_mat = materiais[k].getYoung(); //unidade: GPa
 	double p_mat = materiais[k].getPoisson();
@@ -136,7 +137,7 @@ void realizarCalculos(string nome){
 		sigmas[i][1]=-(sigma_fi[i] + (1000*y_mat*deformacao[i][4]*cos(fi[i])*cos(fi[i]))/p_mat);
 		sigmas[i][1] /= (cos(fi[i])*cos(fi[i]) - sin(fi[i])*sin(fi[i]));
 	}	
-	printf("Sigmas 11: %lf MPa\n\t%lf MPa\n\t%lf MPa\nsigmas22: %lf MPa\n\t%lf MPa\n\t%lf MPa\n",sigmas[0][0],sigmas[1][0],sigmas[2][0],sigmas[0][1],sigmas[1][1],sigmas[2][1]);
+	printf("Sigmas 11: %lf MPa\n\t%lf MPa\n\t%lf MPa\nsigmas 22: %lf MPa\n\t%lf MPa\n\t%lf MPa\n",sigmas[0][0],sigmas[1][0],sigmas[2][0],sigmas[0][1],sigmas[1][1],sigmas[2][1]);
 	double media_11, media_22;
 	media_11=(sigmas[0][0] + sigmas[2][0])/2; //consertar as médias, talvez não faça sentido pra teoria
 	media_22=(sigmas[0][1] + sigmas[2][1])/2;
